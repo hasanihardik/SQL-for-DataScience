@@ -1,0 +1,60 @@
+Q1.Filtering data is used to do which of the following? (select all that apply).
+
+Answers:
+Narrows down the results of the data.
+Reduces the strain on the client application
+Reduce the time it takes to run the query
+Removes unwanted data in a calculation
+Helps you understand the contents of your data
+
+Q2.You are doing an analysis on musicians that start with the letter “K”. Select the correct query that would retrieve only the artists whose name starts with this letter.
+
+Answers:
+SELECT name FROM Artists WHERE name LIKE ‘K%’;
+
+Q3.A null and a zero value effectively mean the same thing. True or false?
+
+Answers:
+False
+
+Q4.Select all that are true regarding wildcards
+
+Answers:
+Wildcards take longer to run compared to a logical operator
+Wildcards at the end of search patterns take longer to run
+
+Q5. Select the statements below that ARE NOT true of the ORDER BY clause (select all that apply).
+
+Answers:
+Cannot sort by a column not retrieved
+Can be anywhere in the select statement
+
+Q6. Select all of the valid math operators in SQL (select all that apply).
+
+Answers:
++ (addition)
+- (subtraction)
+/ (division)
+* (multiplication)
+
+Q7. Which of the following is an aggregate function? (select all that apply).
+
+Answers: Max, min and count
+
+Q8. Which of the following is true of GROUP BY clauses?
+
+Answers:
+GROUP BY clauses can contain multiple columns
+NULLs will be grouped together if your Group By column contains NULLs
+Every column in your select statement must be present in a group by clause, except for aggregated calculations.
+
+Q9. Select the true statement below.
+
+Answers:
+HAVING filters after the data is grouped.
+
+Q10. Which is the correct order of occurrence in a SQL statement?
+
+Answers:
+select, from, where, group by, having
+
