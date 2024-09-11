@@ -1,0 +1,66 @@
+1. Which of the following are supported in SQL when dealing with strings? (Select all that apply).
+Answers:
+
+Lower
+
+Trim
+
+Upper
+
+Concatenate
+
+Substring
+
+What will the result of the following statement be? SELECT LEFT('You are beautiful.', 3)
+Answers:
+
+u are beautiful
+
+3. What is the results of the following query? select * orders where order_date = ‘2017-07-15’
+Answers:
+
+You won't get any results
+
+4. Case statements can only be used for which of the following statements (select all that apply)?
+Answers:
+
+Update
+
+Delete
+
+Insert
+
+Select
+
+5. Which of the following is false regarding views?
+Answers:
+
+Views will remain after the database connection has ended
+
+6. You are only allowed to have one condition in a case statement. True or false?
+Answers:
+
+False
+
+7. Select the correct SQL syntax for creating a view.
+Answers:
+
+CREATE VIEW customers AS SELECT * FROM customers WHERE Name LIKE '%I'
+
+8. Profiling data is helpful for which of the following? (Select all that apply)
+Answers:
+
+Filter out unwanted data elements
+
+Understanding your data
+
+9. What is the most important step before beginning to write queries?
+Answers:
+
+Understanding your data
+
+10. When debugging a query, what should you always remember to do first?
+Answers:
+
+Start simple and break it down first
+
