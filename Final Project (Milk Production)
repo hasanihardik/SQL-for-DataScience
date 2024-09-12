@@ -1,173 +1,224 @@
-q1)Find the total milk production for the year 2023:
-
-sql
-Copy code
-SELECT SUM(P.Value) TOTAL_MILK_PRODUCTION
+1. Find the total milk production for the year 2023.
+SELECT 
+ SUM(P.Value) TOTAL_MILK_PRODUCTION
 FROM DBO.milk_production P
 WHERE P.Year = '2023';
-Answer: The total milk production for 2023 is 500,000,000 units.
+TOTAL_MILK_PRODUCTION
+---------------------
+91812000000
 
-q2)Show coffee production data for the year 2015. What is the total value?
 
-sql
-Copy code
-SELECT SUM(P.Value) TOTAL_COFFEE_PRODUCTION
+2. Show coffee production data for the year 2015. What is the total value?
+SELECT
+ SUM(P.Value) TOTAL_COFFEE_PRODUCTION
 FROM DBO.coffee_production P
 WHERE P.Year = '2015';
-Answer: The total coffee production for 2015 is 200,000,000 units.
+TOTAL_COFFEE_PRODUCTION
+-----------------------
+6600000
 
-q3)Find the average honey production for the year 2022:
 
-sql
-Copy code
-SELECT AVG(P.Value) AVG_PRODUCTION
+
+3. Find the average honey production for the year 2022.
+SELECT
+ AVG(P.Value) AVG_PRODUCTION
 FROM DBO.honey_production P
 WHERE P.Year = '2022';
-Answer: The average honey production for 2022 is 50,000 units.
+AVG_PRODUCTION
+--------------
+3133275
 
-q4)Get the state names with their corresponding ANSI codes from the state_lookup table. What number is Iowa?
 
-sql
-Copy code
-SELECT ST.State_ANSI
+
+4. Get the state names with their corresponding ANSI codes from the state_lookup table. What number is Iowa?
+SELECT
+ ST.State_ANSI
 FROM DBO.state_lookup ST
 WHERE ST.State = 'Iowa';
-Answer: The ANSI code for Iowa is 19.
+State_ANSI
+----------
+19
 
-q5)Find the highest yogurt production value for the year 2022:
 
-sql
-Copy code
-SELECT MAX(P.Value) MAX_YOGHURT_PRODUCTION_2022
+
+5. Find the highest yogurt production value for the year 2022.
+SELECT
+ MAX(P.Value) MAX_YOGHURT_PRODUCTION_2022
 FROM DBO.yogurt_production P
 WHERE P.Year = '2022';
-Answer: The highest yogurt production value for 2022 is 1,200,000 units.
+MAX_YOGHURT_PRODUCTION_2022
+---------------------------
+793256000
 
-q6)Find states where both honey and milk were produced in 2022. Did State_ANSI “35” produce both honey and milk in 2022?
 
-sql
-Copy code
-SELECT *
+6. Find states where both honey and milk were produced in 2022. Did State_ANSI “35” produce both honey and milk in 2022?
+SELECT
+*
 FROM DBO.state_lookup SL
-LEFT JOIN DBO.honey_production HP ON SL.State_ANSI = HP.State_ANSI
-LEFT JOIN DBO.milk_production MP ON SL.State_ANSI = MP.State_ANSI
-WHERE HP.Year = '2022' AND MP.Year = '2022' AND SL.State_ANSI = '35';
-Answer: Yes, State_ANSI 35 (New Mexico) produced both honey and milk in 2022.
+LEFT JOIN DBO.honey_production HP
+ON SL.State_ANSI  = HP.State_ANSI
+LEFT JOIN DBO.milk_production MP
+ON SL.State_ANSI = MP.State_ANSI
+WHERE HP.Year = '2022' 
+ AND MP.Year = '2022'
+ AND SL.State_ANSI = '35';
+State                                              State_ANSI Year   Geo_Level                                          State_ANSI Commodity_ID Value       Year   Period                                             Geo_Level                                          State_ANSI Commodity_ID Domain                                             Value
+-------------------------------------------------- ---------- ------ -------------------------------------------------- ---------- ------------ ----------- ------ -------------------------------------------------- -------------------------------------------------- ---------- ------------ -------------------------------------------------- --------------------
 
-q7)Find the total yogurt production for states that also produced cheese in 2022:
+(0 rows affected)
 
-sql
-Copy code
-SELECT SUM(YP.Value) TOTAL_YOGHURT_PRODUCTION
+
+7. Find the total yogurt production for states that also produced cheese in 2022.
+SELECT
+ SUM(YP.Value) TOTAL_YOGHURT_PRODUCTION
 FROM DBO.yogurt_production YP
 WHERE YP.Year = '2022'
-AND YP.State_ANSI IN (
-  SELECT DISTINCT CP.State_ANSI
+ AND YP.State_ANSI IN (
+  SELECT DISTINCT
+   CP.State_ANSI
   FROM DBO.cheese_production CP
   WHERE CP.Year = '2022'
-);
-Answer: The total yogurt production for states that also produced cheese in 2022 is 5,000,000 units.
+ );
+TOTAL_YOGHURT_PRODUCTION
+------------------------
+1171095000
 
-q8)Can you find out the total milk production for 2023?
 
-sql
-Copy code
-SELECT SUM(P.Value) TOTAL_MILK_PRODUCTION_2023
+8. Can you find out the total milk production for 2023? Your manager wants this information for the yearly report. What is the total milk production for 2023?
+SELECT 
+ SUM(P.Value) TOTAL_MILK_PRODUCTION_2023
 FROM milk_production P
 WHERE P.Year = 2023;
-Answer: The total milk production for 2023 is 450,000,000 units.
+TOTAL_MILK_PRODUCTION_2023
+--------------------------
+91812000000
 
-q9)Which states had cheese production greater than 100 million in April 2023?
 
-sql
-Copy code
-SELECT L.State, L.State_ANSI
+9. Which states had cheese production greater than 100 million in April 2023? The Cheese Department wants to focus their marketing efforts there. How many states are there?
+SELECT
+ L.State
+ ,L.State_ANSI
 FROM cheese_production P
-INNER JOIN state_lookup L ON P.State_ANSI = L.State_ANSI
-WHERE P.Value > 100000000 AND P.Period = 'APR' AND P.Year = 2023;
-Answer: California and Wisconsin had cheese production greater than 100 million in April 2023.
+INNER JOIN state_lookup L
+ON P.State_ANSI = L.State_ANSI
+WHERE P.Value > 100000000
+ AND P.Period = 'APR'
+ AND P.Year = 2023;
+State                                              State_ANSI
+-------------------------------------------------- ----------
+CALIFORNIA                                         6
+WISCONSIN                                          55
 
-q10)What is the total value of coffee production for 2011?
 
-sql
-Copy code
-SELECT P.Year, SUM(P.Value) TOTAL_COFFEE_PRO_IN_2011
+10. Your manager wants to know how coffee production has changed over the years. What is the total value of coffee production for 2011?
+SELECT
+ P.Year,
+ SUM(P.Value) TOTAL_COFFEE_PRO_IN_2011
 FROM coffee_production P
 GROUP BY P.Year
 HAVING P.Year = 2011;
-Answer: The total coffee production for 2011 is 175,000,000 units.
+Year   TOTAL_COFFEE_PRO_IN_2011
+------ ------------------------
+2011   7600000
 
-q11)Find the average honey production for 2022:
-sql
-Copy code
-SELECT AVG(P.Value) AVG_HONEY_PRO_IN_2022
+
+11. There’s a meeting with the Honey Council next week. Find the average honey production for 2022 so you’re prepared.
+SELECT
+ AVG(P.Value) AVG_HONEY_PRO_IN_2022
 FROM honey_production P
 WHERE P.Year = 2022;
-Answer: The average honey production for 2022 is 45,000 units.
+AVG_HONEY_PRO_IN_2022
+---------------------
+3133275
 
-q12)Can you generate a list of all states names with their corresponding ANSI codes? What is the State_ANSI code for Florida?
-sql
-Copy code
-SELECT * FROM state_lookup L WHERE L.State = 'FLORIDA';
-Answer: The ANSI code for Florida is 12.
 
-q13)List all states with their cheese production values, even if they didn’t produce any cheese in April of 2023. What is the total for NEW JERSEY?
-sql
-Copy code
-SELECT L.State, SUM(P.Value) TOTAL_CHEESE_PRODUCTION
+12. The State Relations team wants a list of all states names with their corresponding ANSI codes. Can you generate that list? What is the State_ANSI code for Florida?
+SELECT
+ *
 FROM state_lookup L
-LEFT JOIN cheese_production P ON L.State_ANSI = P.State_ANSI
-WHERE P.Period = 'APR' AND P.Year = 2023
+WHERE L.State = 'FLORIDA';
+State                                              State_ANSI
+-------------------------------------------------- ----------
+FLORIDA                                            12
+
+
+13. For a cross-commodity report, can you list all states with their cheese production values, even if they didn’t produce any cheese in April of 2023? What is the total for NEW JERSEY?
+SELECT 
+ L.State,
+ SUM(P.Value) TOTAL_CHEESE_PRODUCTION
+FROM state_lookup L
+LEFT JOIN cheese_production P
+ON L.State_ANSI = P.State_ANSI
+WHERE P.Period = 'APR'
+ AND P.Year = 2023
 GROUP BY L.State
 HAVING L.State = 'NEW JERSEY';
-Answer: The total cheese production for New Jersey in April 2023 is 30,000 units.
+State                                              TOTAL_CHEESE_PRODUCTION
+-------------------------------------------------- -----------------------
+NEW JERSEY                                         
+4889000
 
-q14)Find the total yogurt production for states in the year 2022 which also have cheese production data from 2023:
-sql
-Copy code
-SELECT SUM(YP.Value) TOTAL_YOGHURT_PRODUCTION
+14. Can you find the total yogurt production for states in the year 2022 which also have cheese production data from 2023? This will help the Dairy Division in their planning.
+SELECT
+ SUM(YP.Value) TOTAL_YOGHURT_PRODUCTION
 FROM DBO.yogurt_production YP
 WHERE YP.Year = '2022'
-AND YP.State_ANSI IN (
-  SELECT DISTINCT CP.State_ANSI
+ AND YP.State_ANSI IN (
+  SELECT DISTINCT
+   CP.State_ANSI
   FROM DBO.cheese_production CP
   WHERE CP.Year = '2023'
-);
-Answer: The total yogurt production for states that also had cheese production in 2023 is 4,500,000 units.
+ );
+TOTAL_YOGHURT_PRODUCTION
+------------------------
+1171095000
 
-q15)List all states from state_lookup that are missing from milk_production in 2023. How many states are there?
-sql
-Copy code
-SELECT COUNT(DISTINCT S.State) COUNT_OF_MISSING_MILK_PRODUCTION_STATE_IN_2023
+
+15. List all states from state_lookup that are missing from milk_production in 2023. How many states are there?
+SELECT 
+ COUNT(DISTINCT S.State) COUNT_OF_MISSING_MILK_PRODUCTION_STATE_IN_2023
 FROM DBO.state_lookup S
-LEFT JOIN DBO.milk_production P ON S.State_ANSI = P.State_ANSI AND P.Year = 2023
+LEFT JOIN DBO.milk_production P
+ON S.State_ANSI = P.State_ANSI
+ AND P.Year = 2023
 WHERE P.State_ANSI IS NULL;
-Answer: There are 5 states missing from milk production in 2023.
+COUNT_OF_MISSING_MILK_PRODUCTION_STATE_IN_2023
+----------------------------------------------
+26
 
-q16)Did Delaware produce any cheese in April 2023?
-sql
-Copy code
-SELECT DISTINCT S.State, P.Year, ISNULL(P.Value, 0) AS production_amount
+
+16. List all states with their cheese production values, including states that didn’t produce any cheese in April 2023. Did Delaware produce any cheese in April 2023?
+SELECT DISTINCT
+ S.State,
+ --P.Period,
+ P.Year,
+ --P.Value,
+ --s.state
+    ISNULL(P.Value, 0) AS production_amount
 FROM DBO.state_lookup S
-LEFT JOIN DBO.cheese_production P ON P.State_ANSI = S.State_ANSI AND P.Year = 2023 AND P.Period = 'APR'
+LEFT JOIN DBO.cheese_production P
+ON P.State_ANSI = S.State_ANSI 
+ AND P.Year = 2023
+ AND P.Period = 'APR'
 WHERE S.State = 'DELAWARE';
-Answer: No, Delaware did not produce any cheese in April 2023.
+State                                              Year   production_amount
+-------------------------------------------------- ------ --------------------
+DELAWARE                                           
+NULL   0
 
-17)Find the average coffee production for all years where the honey production exceeded 1 million:
-sql
-Copy code
-SELECT AVG(P.Value) AVERAGE_COFFEE_PRODUCTION
+
+17. Find the average coffee production for all years where the honey production exceeded 1 million.
+SELECT
+ AVG(P.Value) AVERAGE_COFFEE_PRODUCTION
 FROM DBO.coffee_production P
 WHERE P.Year IN (
-  SELECT HP.Year
-  FROM dbo.honey_production HP
-  WHERE HP.Value > 1000000
+ SELECT
+  HP.Year
+ FROM dbo.honey_production HP
+ WHERE HP.Value > 1000000
 );
-Answer: The average coffee production for years with honey production exceeding 1 million is 300,000,000 units.
 
 
-
-
-
-
-
+AVERAGE_COFFEE_PRODUCTION
+-------------------------
+6426666
